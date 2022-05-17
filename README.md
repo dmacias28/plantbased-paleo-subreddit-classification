@@ -67,7 +67,7 @@ The top 15 plant-based unigrams and bigrams didn’t appear to be too interestin
 
 The top 15 paleo unigrams and bigrams also included general diet terms (such as recipes and weight loss), but also included were many terms, aside from paleo (such as keto, chicken, low carb, grass fed, and bone broth), that were likely to set many of the submissions apart from the plant-based submissions. 
 
-Based on findings, the paleo submissions seem likely to have a better chance at being identified correctly than the plant-based submissions.
+Based on these findings, the paleo submissions seem likely to have a better chance at being identified correctly than the plant-based submissions.
 
 ### Model Exploration
 
