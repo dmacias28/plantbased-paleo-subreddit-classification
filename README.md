@@ -6,13 +6,13 @@
 
 ## Purpose
 
-Lifestyle Eating is out to help people live healthier and happier lives through their diets. The idea is to build a platform that fosters a supportive community of users for a variety of diets. Within each diet community, they’ll be able to ask questions, share recipes and provide personal updates.
+Lifestyle Eating is out to help people live healthier and happier lives through their diets. The idea is to build a platform that fosters a supportive community of users for a variety of diets. Users will be able engage with the community through posts in the form of questions, recipes, tips, personal updates and more.
 
-Though the option to simply have the user fill this information out when they post exists, the product development team is interested in rolling it out with auto-classification technology that can detect what diet the user is on, as they think this is something that could come in handy in later platform features.
+Having the user include their diet when they post is an option, but the product development team is interested in implementing auto-classification technology that can detect what diet the user is on, as this could come in handy with later platform features.
 
 To see how viable this auto-classification technology will be when applied to user posts, they've requested for us, the data science team, to look into it.
 
-As lead data scientist on phase 1 of Project Auto-Classify, I’ve chosen to pull submissions from the [PlantBasedDiet](https://www.reddit.com/r/PlantBasedDiet/) and [Paleo](https://www.reddit.com/r/Paleo/) subreddits, as the submissions are very similar to what users would post on the Lifestyle Eating platform. These two diets were chosen because while they have a major difference, they share many similarities that will make the project a moderately challenging one. 
+As lead on the first phase of this request, I’ve chosen to pull submissions from the [PlantBasedDiet](https://www.reddit.com/r/PlantBasedDiet/) and [Paleo](https://www.reddit.com/r/Paleo/) subreddits, as the submissions are very similar to what users would post on the Lifestyle Eating platform. These two diets were chosen because while they have notable differences, they do have many similarities that will make for good testing data.
 
 The purpose of phase 1 will be to identify the classification model that will most accurately detect the diets of the submissions. The model will be evaluated through the accuracy scores of the training and testing datasets. The results and findings of this phase will serve as the building blocks for the remainder of the project’s phases.
 
@@ -53,19 +53,21 @@ Through this, two CSV files were created, one for the [PlantBasedDiet](https://w
 
 ### Data Cleaning
 
-As part of the cleaning process, the selftext and created_utc features were dropped. The selftext feature had between 2,100-2,300 missing values per subreddit that could not be imputed, and the created_utc feature was no longer of any use.
+As part of the cleaning process, the selftext and created_utc features were dropped. While the selftext feature could have been valuable, it had between 2,100-2,300 missing values per subreddit that could not be imputed, and the timestamps of these submissions were no longer relevant.
 
-This left the subreddit and title features as the main focus. The names in the subreddit feature were mapped to binary values, while characters and additional information in the title feature, such as URLs, digits, punctuation, special characters and emojis, were removed as they did not provide any value for this project’s purpose.
+This left the subreddit and title features as the main focus. The names in the subreddit feature were mapped to binary values, while characters and additional information in the title feature, such as URLs, digits, punctuation, special characters and emojis were removed as they did not provide any value.
 
 ### Exploratory Data Analaysis
 
-Prior to the cleaning of the title feature, an initial exploratory data analysis was conducted and character and word counts per title were checked. The character and word counts were comparable and very similarly distributed (right-skewed) between both the plant-based and paleo datasets, so there was nothing that stood out there. As a result, these features were dropped.
+Prior to the cleaning of the title feature, an initial exploratory data analysis was conducted and character and word counts per title were checked. The character and word counts were comparable and very similarly distributed (unimodal and right-skewed) between both the plant-based and paleo datasets, so there was nothing that stood out there. As a result, these features were dropped.
 
 After the cleaning of the title feature, additional exploratory data analysis was conducted and the most common unigrams and bigrams were identified. This was after fitting and transforming each dataset to a CountVectorizer that analyzed by word, changed all words to lowercase and removed the NLTK’s predefined stopwords.
 
 The top 15 plant-based unigrams and bigrams didn’t appear to be too interesting. They were either words that were obviously referring to a plant-based diet (such as plant, vegan, and wfpb) or general diet terms (such as recipe, protein, healthy and weight loss).
 
 The top 15 paleo unigrams and bigrams also included general diet terms (such as recipes and weight loss), but also included were many terms, aside from paleo (such as keto, chicken, low carb, grass fed, and bone broth), that were likely to set many of the submissions apart from the plant-based submissions. 
+
+Based on findings, the paleo submissions seem likely to have a better chance at being identified correctly than the plant-based submissions.
 
 ### Model Exploration
 
