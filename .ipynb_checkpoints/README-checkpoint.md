@@ -1,8 +1,9 @@
 # ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 3
 
-<h1 align="center">Whole-Food Plant-Based vs. Paleo:<br />Identifying the best-performing classification model</h1>
+<h1 align="center">Whole-Food Plant-Based vs. Paleo:
 
----
+Identifying the best-performing classification model
+</h1>
 
 ## Purpose
 
@@ -20,6 +21,21 @@ The purpose of phase 1 will be to identify the classification model that will mo
 
 ## Data
 
+### Datasets
+
+The subreddit submissions were obtained through the Pushift API. Given that the API limits to pulling 100 submissions at a time, a function was created in order to automate the pulling of the desired number of submissions and return a concatenated DataFrame for a given subreddit.
+
+Through this, two CSV files were created, one for the [PlantBasedDiet](https://www.reddit.com/r/PlantBasedDiet/) subreddit and one for the [Paleo](https://www.reddit.com/r/Paleo/) subreddit. Each contained the most recent 5,000 submissions.
+
+### Data Dictionary
+
+|**Feature**|**Type**|**Description**|
+|---|---|---|
+|**subreddit**|*object*|Name of the subreddit the submission belonged to.|
+|**title**|*object*|Title of the submission.|
+|**selftext**|*object*|Body text of the submission.|
+|**created_utc**|*object*|Time of submission in unix time (seconds since 01-01-1970 UTC).|
+
 ### Whole-Food Plant-Based vs. Paleo
 
 As previously mentioned, the plant-based and paleo diets were chosen because while they have major differences, they share many similarities. So, what exactly do they consist of?
@@ -36,17 +52,6 @@ So the similarities lie in that they focus on natural foods like fruits, vegetab
 
 The differences lie in that a paleo diet allows meat and fish, and avoids grains and legumes. The plant-based diet allows grains and legumes, but does not allow meat and fish.
 
-### Data Source
-
-The subreddit submissions were obtained through the Pushift API. Given that the API limits to pulling 100 submissions at a time, a function was created in order to automate the pulling of the desired number of submissions and return a concatenated DataFrame for a given subreddit.
-
-Through this, two CSV files were created, one for the [PlantBasedDiet](https://www.reddit.com/r/PlantBasedDiet/) subreddit and one for the [Paleo](https://www.reddit.com/r/Paleo/) subreddit. Each contained the most recent 5,000 submissions, and included the following features: 
-
-* **subreddit** - name of the subreddit the submission belonged to
-* **title** - title of the submission
-* **selftext** - body text of the submission
-* **created_utc** - time of submission in unix time (seconds since 01-01-1970 UTC)
-
 ---
 
 ## Methodology
@@ -57,7 +62,7 @@ As part of the cleaning process, the selftext and created_utc features were drop
 
 This left the subreddit and title features as the main focus. The names in the subreddit feature were mapped to binary values, while characters and additional information in the title feature, such as URLs, digits, punctuation, special characters and emojis were removed as they did not provide any value.
 
-### Exploratory Data Analaysis
+### Exploratory Data Analysis
 
 Prior to the cleaning of the title feature, an initial exploratory data analysis was conducted and character and word counts per title were checked. The character and word counts were comparable and very similarly distributed (unimodal and right-skewed) between both the plant-based and paleo datasets, so there was nothing that stood out there. As a result, these features were dropped.
 
@@ -124,10 +129,12 @@ This means that the model is optimizing for true negatives with a 0.9339 accurac
 
 ## Conclusion
 
-### Recommendations and Next Steps
+### Recommendation
 
 It’s recommended to keep the XGBoost classification model in mind as a best-performer, as it showed the most promising results despite the imbalance in accuracy between the diets.
 
+
+### Next Steps
 With the plant-based and paleo datasets, it will be beneficial to identify the words that could be causing the paleo submissions to be mistaken for plant-based submissions. Removing words relating to the diets’ commonalities, such as fruits and vegetables, may result in model improvement. It will also be beneficial to pull more submissions from each subreddit and run the model on larger datasets.
 
 The XGBoost model should also be tried with other diet datasets, such as Mediterranean, Keto, Vegetarian, Gluten-Free, etc. to see how it performs there.
